@@ -29,10 +29,8 @@ target_include_directories(po_test PUBLIC ${LIB_INCLUDE_DIRS})
 
 option(BUILD_DYNAMIC "USING SHARED LIBRARY" OFF) # By default PARALLEL is OFF.
 if(BUILD_DYNAMIC)
-    message("PROGRAM_OPTIONS_DYNAMIC_LIB = ${DYNAMIC_LIB}")
     target_link_libraries(po_test PUBLIC ${DYNAMIC_LIB} ${GTEST_LIBRARIES} -pthread)
 else()
-    message("PROGRAM_OPTIONS_STATIC_LIB = ${STATIC_LIB}")
     target_link_libraries(po_test PUBLIC ${STATIC_LIB} ${GTEST_LIBRARIES} -pthread)
 endif()
 
