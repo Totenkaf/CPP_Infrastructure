@@ -1,5 +1,5 @@
 [![.github/workflows/ci.yml](https://github.com/Totenkaf/CPP_Infrastructure/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/CPP_Infrastructure/actions/workflows/ci.yml)
-
+[![codecov](https://codecov.io/gh/Totenkaf/CPP_Infrastructure/branch/HW_1-Artem-dev/graph/badge.svg?token=zHVutFCla6)](https://codecov.io/gh/Totenkaf/CPP_Infrastructure)
 # VK | SEM II_CPP_Infrastructure | HW_1
 
 ================================================================ 

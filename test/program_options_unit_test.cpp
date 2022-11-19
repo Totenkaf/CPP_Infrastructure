@@ -13,7 +13,7 @@ TEST_F(ProgramOptionsEnvironment, get_description_test) {
   EXPECT_EQ(parser.get_description(), "test_parser");
 }
 
-TEST_F(ProgramOptionsEnvironment, check_default_template) {
+TEST_F(ProgramOptionsEnvironment, check_default_template_test) {
   parser.add_argument("-i", "int", 5);
   parser.add_argument("-f", "float", 5.52);
   parser.add_argument("-d", "double", 7.156656);
@@ -41,18 +41,7 @@ TEST_F(ProgramOptionsEnvironment, check_default_template) {
   EXPECT_EQ(default_template["--storage"][1], "my_storage");
 }
 
-// add_argument("-d", 7.256);
-// add_argument("-f", "--flag", 7.256);
-// add_argument("-i", "--input", 5);
-
-// add_argument("-i", "int", 5);
-// add_argument("-i", "--validation", "int", 5);
-// add_argument("-f", "float", 5.52);
-// add_argument("-f", "double", 7.1566568);
-// add_argument("-s", "--storage", "string", "my_string");
-// parser.add_argument("-i", "--validation", "int", 5);
-
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -2,108 +2,108 @@
 on: push
 
 jobs:
-  # checking:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: WORKING DIRECTORY
-  #       run: pwd
+  checking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
 
-  #     - name: INSTALL GCC
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y gcc g++
-  #         which gcc
+      - name: INSTALL GCC
+        run: |
+          sudo apt-get update && sudo apt-get install -y gcc g++
+          which gcc
 
-  #     - name: INSTALL CMAKE
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y cmake
-  #         which cmake
+      - name: INSTALL CMAKE
+        run: |
+          sudo apt-get update && sudo apt-get install -y cmake
+          which cmake
 
-  #     - name: INSTALL CLANG-FORMAT
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y clang-format
-  #         which clang
+      - name: INSTALL CLANG-FORMAT
+        run: |
+          sudo apt-get update && sudo apt-get install -y clang-format
+          which clang
 
-  #     - name: CLANG-FORMATTING
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo cmake -DENABLE_CLANG_FORMAT=ON ..
-  #         sudo make
-  #         sudo make clang-format
-  #         cd ../
+      - name: CLANG-FORMATTING
+        run: |
+          mkdir -p build && cd build
+          sudo cmake -DENABLE_CLANG_FORMAT=ON ..
+          sudo make
+          sudo make clang-format
+          cd ../
 
-  #     - name: INSTALL CPPLINT
-  #       run: |
-  #         sudo apt-get update && sudo pip install cpplint
-  #         which cpplint
+      - name: INSTALL CPPLINT
+        run: |
+          sudo apt-get update && sudo pip install cpplint
+          which cpplint
 
-  #     - name: CPPLINT CHECK
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo cmake -DENABLE_CPPLINT=ON ..
-  #         sudo make
-  #         sudo make cpplint
-  #         cd ../
+      - name: CPPLINT CHECK
+        run: |
+          mkdir -p build && cd build
+          sudo cmake -DENABLE_CPPLINT=ON ..
+          sudo make
+          sudo make cpplint
+          cd ../
 
-  #     - name: CPP CHECK
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo cmake -DENABLE_CPPCHECK=ON ..
-  #         sudo make
-  #         sudo make check
-  #         cd ../
+      - name: CPP CHECK
+        run: |
+          mkdir -p build && cd build
+          sudo cmake -DENABLE_CPPCHECK=ON ..
+          sudo make
+          sudo make check
+          cd ../
 
-  #     - name: INSTALL FBINFER
-  #       run: |
-  #         VERSION=1.0.0; \
-  #           curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz" \
-  #           | sudo tar -C /opt -xJ && \
-  #           sudo ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer
+      - name: INSTALL FBINFER
+        run: |
+          VERSION=1.0.0; \
+            curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz" \
+            | sudo tar -C /opt -xJ && \
+            sudo ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer
 
-  #     - name: FBINFER CHECK
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo apt install libncurses5 -y
-  #         sudo cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DENABLE_INFER=ON ..
-  #         sudo make infer
-  #         cd ../
+      - name: FBINFER CHECK
+        run: |
+          mkdir -p build && cd build
+          sudo apt install libncurses5 -y
+          sudo cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DENABLE_INFER=ON ..
+          sudo make infer
+          cd ../
 
-  # building:
-  #   runs-on: ubuntu-latest
-  #   needs: [checking]
-  #   steps:
+  building:
+    runs-on: ubuntu-latest
+    needs: [checking]
+    steps:
 
-  #     - uses: actions/checkout@v2
-  #     - name: WORKING DIRECTORY
-  #       run: pwd
+      - uses: actions/checkout@v2
+      - name: WORKING DIRECTORY
+        run: pwd
 
-  #     - name: INSTALL GCC
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y gcc g++
-  #         which gcc
+      - name: INSTALL GCC
+        run: |
+          sudo apt-get update && sudo apt-get install -y gcc g++
+          which gcc
 
-  #     - name: INSTALL CMAKE
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y cmake
-  #         which cmake
+      - name: INSTALL CMAKE
+        run: |
+          sudo apt-get update && sudo apt-get install -y cmake
+          which cmake
 
-  #     - name: INSTALL VALGRIND
-  #       run: |
-  #         sudo apt-get update && sudo apt-get install -y valgrind
-  #         which valgrind
+      - name: INSTALL VALGRIND
+        run: |
+          sudo apt-get update && sudo apt-get install -y valgrind
+          which valgrind
 
 
-  #     - name: RUN VALGRIND PROGRAMM
-  #       run: |
-  #         mkdir -p build && cd build
-  #         sudo cmake -DBUILD_DYNAMIC=ON ..
-  #         sudo make
-  #         sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669
-  #         cd ../
+      - name: RUN VALGRIND PROGRAMM
+        run: |
+          mkdir -p build && cd build
+          sudo cmake -DBUILD_DYNAMIC=ON ..
+          sudo make
+          sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669
+          cd ../
 
   testing:
     runs-on: ubuntu-latest
-    # needs: [building]
+    needs: [building]
     steps:
 
       - uses: actions/checkout@v2
