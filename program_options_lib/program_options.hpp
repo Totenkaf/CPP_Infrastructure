@@ -87,8 +87,3 @@ void ArgumentParser::add_argument(const char* first, const Params&... params) {
     std::cout << "bad check" << std::endl;
   }
 }
-
-template <typename T>
-auto ArgumentParser::to_str(const T& val) -> std::string {
-  return std::to_string(val);
-}

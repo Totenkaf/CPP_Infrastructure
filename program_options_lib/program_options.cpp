@@ -26,7 +26,7 @@ void ArgumentParser::fill_args(const std::string& arg, const std::string& type,
     } else if (type == "double") {
       double_args[arg] = stod(value);
     } else {
-      string_args[arg] = value;
+      string_args[arg] = stoi(value);
     }
   } catch (const std::exception& e) {
     throw std::invalid_argument(
@@ -75,6 +75,11 @@ void ArgumentParser::make_args_template(const std::vector<std::string>& keys,
       }
     }
   }
+}
+
+template <typename T>
+auto ArgumentParser::to_str(const T& val) -> std::string {
+  return std::to_string(val);
 }
 
 void ArgumentParser::print_argument_map() {
