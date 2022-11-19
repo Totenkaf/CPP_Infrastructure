@@ -1,3 +1,5 @@
+[![.github/workflows/ci.yml](https://github.com/Totenkaf/CPP_Infrastructure/actions/workflows/ci.yml/badge.svg)](https://github.com/Totenkaf/CPP_Infrastructure/actions/workflows/ci.yml)
+
 # VK | SEM II_CPP_Infrastructure | HW_1
 
 ================================================================ 
