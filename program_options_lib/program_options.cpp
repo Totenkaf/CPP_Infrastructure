@@ -46,7 +46,7 @@ auto ::ArgumentParser::parse_args(int argc, char const* argv[]) -> int {
   try {
     fill_by_default_args();
 
-    for (int i = 1; i < argc; ++i) {
+    for (int i = 0; i < argc; ++i) {
       auto arg = std::string(argv[i]);
       if (arg.starts_with("--")) {
         auto parsed_arg = parse_parametrize_arg(arg);
