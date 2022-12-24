@@ -13,6 +13,7 @@ auto main(int argc, char const *argv[]) -> int {
     parser.add_argument("-d", "double", 7.1566568);
     parser.add_argument("-c", "string", "my_cstring");
     parser.add_argument("-s", "--storage", "string", "my_storage");
+    parser.add_argument("-b", "--boolean", "bool", "true");
   }
   catch(const std::exception& e) {
     std::cerr << e.what() << '\n';
@@ -26,6 +27,7 @@ auto main(int argc, char const *argv[]) -> int {
       std::cout << parser.get_int_args()["-i"] << std::endl;
       std::cout << parser.get_float_args()["-f"] << std::endl;
       std::cout << parser.get_double_args()["-d"] << std::endl;
+      std::cout << parser.get_double_args()["--boolean"] << std::endl;
   }
   return _EXIT_SUCCESS;
 }

@@ -98,7 +98,7 @@ jobs:
           mkdir -p build && cd build
           sudo cmake -DBUILD_DYNAMIC=ON ..
           sudo make
-          sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669
+          sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669 --boolean false
           cd ../
 
   testing:
