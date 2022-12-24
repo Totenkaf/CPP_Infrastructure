@@ -40,7 +40,7 @@ void ArgumentParser::fill_args(const std::string& arg, const std::string& type,
 
 auto ::ArgumentParser::parse_args(int argc, char const* argv[]) -> int {
   if (argc < 2) {
-    std::cerr << "too few arguments" << std::endl;
+    std::cerr << "too few arguments, need at least 2, <prog> <--param=value> or <prog> <-pos> <value>" << std::endl;
     return _EXIT_FAULT;
   }
   try {
