@@ -27,7 +27,7 @@ auto main(int argc, char const *argv[]) -> int {
       std::cout << parser.get_int_args()["-i"] << std::endl;
       std::cout << parser.get_float_args()["-f"] << std::endl;
       std::cout << parser.get_double_args()["-d"] << std::endl;
-      std::cout << parser.get_double_args()["--boolean"] << std::endl;
+      std::cout << parser.get_bool_args()["--boolean"] << std::endl;
   }
   return _EXIT_SUCCESS;
 }

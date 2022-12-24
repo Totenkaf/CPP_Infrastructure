@@ -1,23 +1,15 @@
-import logging
 import os
 import subprocess
 
 
-right_result = """0 A0 Error: Cycle vertex
-1 B2 Error: Cycle vertex
-2 A1 Error: Cycle vertex
-3 A3 Error: Cycle vertex
-4 A4 Error: Cycle vertex
-5 A5 Value: 10
-6 A6 Value: 100
-7 A7 Value: 202
-8 A8 Value: 2
-9 G9 Error: Vertex is not defined
-10 G10 Error: Vertex is not defined
-11  Error: Vertex is not defined"""
+right_result = """database
+my_cstring
+5
+253.656
+20.3322
+1"""
 
-def system_run_command(command, ignore_stderr = True, additional_env=dict()):
-    logging.debug('Run command %s', command)
+def system_run_command(command, ignore_stderr=True, additional_env=dict()):
     cmd_env = os.environ.copy()
     cmd_env.update(additional_env)
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -31,5 +23,10 @@ def system_run_command(command, ignore_stderr = True, additional_env=dict()):
 
 
 if __name__ == "__main__":
-    result = system_run_command("./build/solution ./inp/test.txt")
-    assert result == right_result
+    result = system_run_command("./program_options -i 5 -f 253.656 --storage=database -d 20.33215669 --boolean=false")
+    if result == right_result:
+        print("INTEGRITY TEST PASSED")
+    else:
+        print("INTEGRITY TEST FAILED")
+        print(f"right: {right_result.split()}")
+        print(f"given: {result.split()}")

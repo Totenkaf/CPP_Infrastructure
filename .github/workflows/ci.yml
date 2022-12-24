@@ -75,7 +75,7 @@ jobs:
           mkdir -p build && cd build
           sudo cmake -DBUILD_DYNAMIC=ON ..
           sudo make
-          sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669 --boolean false
+          sudo valgrind --tool=memcheck --leak-check=full --leak-resolution=med ./program_options -i 5 -f 253.656 --storage=databse -d 20.33215669 --boolean=false
           cd ../
 
   testing:
@@ -134,6 +134,14 @@ jobs:
           cd test
           sudo ./po_test
           cd ../../
+
+      - name: INTEGRITY_TEST
+        run:  |
+          mkdir -p build && cd build
+          sudo cmake -DBUILD_DYNAMIC=ON ..
+          sudo make
+          sudo python3 ../test/program_optins_integrity_test.py
+          cd ../
 
       - name: ADDRESS SANITIZER
         run: |
