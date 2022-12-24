@@ -1,4 +1,5 @@
 // Copyright 2022 by Artem Ustsov
+#include <sstream>
 
 #include "program_options.hpp"
 
@@ -25,8 +26,10 @@ void ArgumentParser::fill_args(const std::string& arg, const std::string& type,
       float_args[arg] = stof(value);
     } else if (type == "double") {
       double_args[arg] = stod(value);
+    } else if (type == "bool") {
+      bool_args[arg] = to_bool(value);
     } else {
-      string_args[arg] = stoi(value);
+      string_args[arg] = value;
     }
   } catch (const std::exception& e) {
     throw std::invalid_argument(
@@ -35,17 +38,16 @@ void ArgumentParser::fill_args(const std::string& arg, const std::string& type,
   }
 }
 
-void ::ArgumentParser::parse_args(int argc, char const* argv[]) {
+auto ::ArgumentParser::parse_args(int argc, char const* argv[]) -> int {
   if (argc < 2) {
-    std::cout << "too few arguments" << std::endl;
-    return;
+    std::cerr << "too few arguments" << std::endl;
+    return _EXIT_FAULT;
   }
   try {
     fill_by_default_args();
 
     for (int i = 1; i < argc; ++i) {
       auto arg = std::string(argv[i]);
-      std::cout << arg << std::endl;
       if (arg.starts_with("--")) {
         auto parsed_arg = parse_parametrize_arg(arg);
         auto type = argtemplate.at(parsed_arg.first)[0];
@@ -57,8 +59,9 @@ void ::ArgumentParser::parse_args(int argc, char const* argv[]) {
     }
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
-    return;
+    return _EXIT_FAULT;
   }
+  return _EXIT_SUCCESS; 
 }
 
 std::string ArgumentParser::to_str(const char* c) { return std::string(c); }
@@ -77,11 +80,6 @@ void ArgumentParser::make_args_template(const std::vector<std::string>& keys,
   }
 }
 
-template <typename T>
-auto ArgumentParser::to_str(const T& val) -> std::string {
-  return std::to_string(val);
-}
-
 void ArgumentParser::print_argument_map() {
   for (const auto& [key, value] : argtemplate) {
     std::cout << key << ", " << value[0] << ", " << value[1] << std::endl;
@@ -95,10 +93,11 @@ auto ArgumentParser::check_params(const std::string& first,
 
   auto short_prefix = std::string_view("-");
   auto first_string = std::string(first);
-  std::set<std::string> valid_values = {"string", "int", "float", "double"};
+  std::set<std::string> valid_values = {"string", "int", "float", "double", "bool"};
+
   if (!first_string.starts_with(short_prefix) ||
       first_string.size() > MAX_SHORT_KEY_SIZE) {
-    std::cout << "it is not short key" << std::endl;
+    std::cerr << first_string << "is not short key" << std::endl;
     return false;
   }
 
@@ -106,21 +105,21 @@ auto ArgumentParser::check_params(const std::string& first,
   switch (params.size()) {
     case 3:
       if (!params[0].starts_with(long_prefix)) {
-        std::cout << "it is not long key" << std::endl;
+        std::cerr << params[0] << "is not long key" << std::endl;
         return false;
       } else if (valid_values.find(params[1]) == valid_values.end()) {
-        std::cout << "wrong type value" << std::endl;
+        std::cerr << "wrong type value" << std::endl;
         return false;
       }
       break;
     case 2:
       if (valid_values.find(params[0]) == valid_values.end()) {
-        std::cout << "wrong type value" << std::endl;
+        std::cerr << "wrong type value" << std::endl;
         return false;
       }
       break;
     default:
-      std::cout << "bad number of arguments" << std::endl;
+      std::cerr << "bad number of arguments" << std::endl;
       return false;
   }
   return true;
@@ -129,4 +128,12 @@ auto ArgumentParser::check_params(const std::string& first,
 auto ArgumentParser::get_default_template() const
     -> std::map<std::string, std::vector<std::string>> {
   return argtemplate;
+}
+
+auto ArgumentParser::to_bool(std::string val) -> bool {
+    std::transform(val.begin(), val.end(), val.begin(), ::tolower);
+    std::istringstream is(val);
+    bool b;
+    is >> std::boolalpha >> b;
+    return b;
 }

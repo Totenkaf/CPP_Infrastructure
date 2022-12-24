@@ -7,6 +7,12 @@
 #include <set>
 #include <vector>
 
+enum exit_status {
+  _EXIT_SUCCESS = 0,
+  _EXIT_FAULT,
+};
+
+
 class ArgumentParser {
  public:
   explicit ArgumentParser(std::string description_)
@@ -16,7 +22,7 @@ class ArgumentParser {
   void add_argument(const char* first, const Params&... params);
 
   void print_argument_map();
-  void parse_args(int argc, char const* argv[]);
+  auto parse_args(int argc, char const* argv[]) -> int;
 
   [[nodiscard]] auto get_default_template() const
       -> std::map<std::string, std::vector<std::string>>;
@@ -25,14 +31,36 @@ class ArgumentParser {
     return description;
   }
 
-  std::map<std::string, int> int_args;
-  std::map<std::string, float> float_args;
-  std::map<std::string, double> double_args;
-  std::map<std::string, std::string> string_args;
+
+  auto get_int_args() const -> std::map<std::string, int> {
+    return int_args;
+  }
+
+  auto get_float_args() const -> std::map<std::string, float> {
+    return float_args;
+  }
+
+  auto get_double_args() const -> std::map<std::string, double> {
+    return double_args;
+  }
+
+  auto get_string_args() const -> std::map<std::string, std::string> {
+    return string_args;
+  }
+
+  auto get_bool_args() const -> std::map<std::string, bool> {
+    return bool_args;
+  }
 
  private:
   std::string description;
   std::map<std::string, std::vector<std::string>> argtemplate;
+
+  std::map<std::string, int> int_args;
+  std::map<std::string, float> float_args;
+  std::map<std::string, double> double_args;
+  std::map<std::string, std::string> string_args;
+  std::map<std::string, bool> bool_args;
 
   void make_args_template(const std::vector<std::string>& keys,
                           const std::string& type, const std::string& value);
@@ -50,6 +78,7 @@ class ArgumentParser {
   auto to_str(const ValueType& val) -> std::string;
 
   auto to_str(const char* c) -> std::string;
+  auto to_bool(std::string val) -> bool;
 };
 
 template <typename... Params>
@@ -57,8 +86,7 @@ void ArgumentParser::add_argument(const char* first, const Params&... params) {
   static const size_t MAX_ARGUMENTS = 3;
 
   if (sizeof...(params) > MAX_ARGUMENTS) {
-    std::cout << "too many arguments in template" << std::endl;
-    return;
+    throw std::logic_error("too many arguments in template");
   }
 
   std::vector<std::string> params_vector{to_str(params)...};
@@ -84,6 +112,11 @@ void ArgumentParser::add_argument(const char* first, const Params&... params) {
       std::cerr << e.what() << '\n';
     }
   } else {
-    std::cout << "bad check" << std::endl;
+    throw std::logic_error("bad check");
   }
+}
+
+template <typename T>
+auto ArgumentParser::to_str(const T& val) -> std::string {
+  return std::to_string(val);
 }
