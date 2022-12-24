@@ -1,3 +1,5 @@
+# Copyright 2022 by Artem Ustsov
+
 import os
 import subprocess
 

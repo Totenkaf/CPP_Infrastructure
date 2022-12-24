@@ -140,7 +140,7 @@ jobs:
           mkdir -p build && cd build
           sudo cmake -DBUILD_DYNAMIC=ON ..
           sudo make
-          sudo python3 ../test/program_optins_integrity_test.py
+          sudo python3 ../test/program_options_integrity_test.py
           cd ../
 
       - name: ADDRESS SANITIZER
