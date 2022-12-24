@@ -97,7 +97,7 @@ auto ArgumentParser::check_params(const std::string& first,
 
   if (!first_string.starts_with(short_prefix) ||
       first_string.size() > MAX_SHORT_KEY_SIZE) {
-    std::cerr << first_string << "is not short key" << std::endl;
+    std::cerr << first_string << " is not short key" << std::endl;
     return false;
   }
 
@@ -105,7 +105,7 @@ auto ArgumentParser::check_params(const std::string& first,
   switch (params.size()) {
     case 3:
       if (!params[0].starts_with(long_prefix)) {
-        std::cerr << params[0] << "is not long key" << std::endl;
+        std::cerr << params[0] << " is not long key" << std::endl;
         return false;
       } else if (valid_values.find(params[1]) == valid_values.end()) {
         std::cerr << "wrong type value" << std::endl;
