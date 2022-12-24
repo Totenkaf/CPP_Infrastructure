@@ -14,6 +14,26 @@ TEST_F(ProgramOptionsEnvironment, parse_parametrize_test) {
   EXPECT_EQ(parser.get_description(), "test_parser");
 }
 
+TEST_F(ProgramOptionsEnvironment, check_to_many_args) {
+  try {
+        parser.add_argument("-i", "--input", "int", 5, 4);
+        FAIL() << "Expected std::logic_error";
+    }
+    catch(std::logic_error const & err) {
+        EXPECT_EQ(err.what(), std::string("too many arguments in template"));
+    }
+}
+
+TEST_F(ProgramOptionsEnvironment, check_bad_check) {
+  try {
+        parser.add_argument("-i", "--input", "int", 5, 4);
+        FAIL() << "Expected std::logic_error";
+    }
+    catch(std::logic_error const & err) {
+        EXPECT_EQ(err.what(), std::string("too many arguments in template"));
+    }
+}
+
 TEST_F(ProgramOptionsEnvironment, check_default_template_test) {
   parser.add_argument("-i", "int", 5);
   parser.add_argument("-f", "float", 5.52);
