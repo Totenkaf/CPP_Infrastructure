@@ -18,6 +18,8 @@ my_cstring
 20.3322
 0"""
 
+right_result_3 = """too few arguments, need at least 2, <prog> <--param=value> or <prog> <-pos> <value>"""
+
 def system_run_command(command, ignore_stderr=True, additional_env=dict()):
     cmd_env = os.environ.copy()
     cmd_env.update(additional_env)
@@ -31,7 +33,7 @@ def system_run_command(command, ignore_stderr=True, additional_env=dict()):
 
     output, errors = p.communicate()
     if p.returncode or (not ignore_stderr and errors):
-        raise IOError("CMD = [{}]\nErrors: {}".format(command, errors if errors else "[]"))
+        return errors.decode("utf-8").strip()
 
     p.wait()
     result = output.decode("utf-8").strip()
@@ -44,3 +46,6 @@ if __name__ == "__main__":
 
     result_2 = system_run_command("./program_options -f 253.656 -d 20.33215669 --boolean=false")
     assert result_2 == right_result_2, f"\nTEST_2 FAULT\nright: {right_result_2.split()}\ngiven: {result_2.split()}"
+
+    result_3 = system_run_command("./program_options", ignore_stderr=False)
+    assert result_3 == right_result_3, f"\nTEST_3 FAULT\nright: {right_result_3.split()}\ngiven: {result_3.split()}"
