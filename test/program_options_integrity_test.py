@@ -43,7 +43,7 @@ if __name__ == "__main__":
     result_1 = system_run_command("./program_options -i 10 -f 253.656 --storage=database -d 20.33215669")
     assert result_1 == right_result_1, f"\nTEST_1 FAULT\nright: {right_result_1.split()}\ngiven: {result_1.split()}"
 
-    result_2 = system_run_command("./program_options -f 253.656 -d 20.33215669 --boolean=false")
+    result_2 = system_run_command("./program_options -f 253.656 -d 20.3322 --boolean=false")
     assert result_2 == right_result_2, f"\nTEST_2 FAULT\nright: {right_result_2.split()}\ngiven: {result_2.split()}"
 
     result_3 = system_run_command("./program_options", ignore_stderr=False)
