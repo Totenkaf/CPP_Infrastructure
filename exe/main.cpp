@@ -8,7 +8,7 @@ auto main(int argc, char const *argv[]) -> int {
   ArgumentParser parser = ArgumentParser("my_parser");
 
   try {
-    parser.add_argument("-i", "int", 5, 4);
+    parser.add_argument("-i", "int", 5);
     parser.add_argument("-f", "float", 5.52);
     parser.add_argument("-d", "double", 7.1566568);
     parser.add_argument("-c", "string", "my_cstring");
