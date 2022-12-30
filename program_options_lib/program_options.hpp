@@ -84,6 +84,11 @@ class ArgumentParser {
 template <typename... Params>
 void ArgumentParser::add_argument(const char* first, const Params&... params) {
 
+    static const size_t MAX_ARGUMENTS = 3;
+    if (sizeof...(params) > MAX_ARGUMENTS) {
+        throw std::logic_error("too many arguments in template");
+    }
+
   std::vector<std::string> params_vector{to_str(params)...};
   std::string short_key;
   std::string long_key;
