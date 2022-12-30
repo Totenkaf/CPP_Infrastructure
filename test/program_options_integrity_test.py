@@ -4,18 +4,18 @@ import os
 import subprocess
 
 right_result_1 = """database
- my_cstring
- 10
- 253.656
- 20.3322
- 1"""
+my_cstring
+10
+253.656
+20.3322
+1"""
 
 right_result_2 = """my_storage
- my_cstring
- 5
- 253.656
- 20.3322
- 0"""
+my_cstring
+5
+253.656
+20.3322
+0"""
 
 right_result_3 = """too few arguments, need at least 2, <prog> <--param=value> or <prog> <-pos> <value>"""
 
